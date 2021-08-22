@@ -20,6 +20,7 @@ class BootScene extends Phaser.Scene {
     this.load.image('button2', 'assets/images/ui/blue_button02.png');
     this.load.image('btc', 'assets/images/btc.png');
     this.load.image('background', 'assets/level/background-extruded.png');
+    this.load.image('qrcode', 'assets/images/zbd.gg.jpg')
   }
   loadSpriteSheets() {
 
