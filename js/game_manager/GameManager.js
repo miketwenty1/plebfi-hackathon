@@ -4,11 +4,11 @@ class GameManager {
     this.mapData = mapData;
 
     this.spawners = {};
-    this.chests = {};
+    this.coffees = {};
     this.monsters = {};
     this.players = {};
     this.playerLocations = [];
-    this.chestLocations = {};
+    this.coffeeLocations = {};
     this.monsterLocations = {};
   }
   setup() {
@@ -25,12 +25,12 @@ class GameManager {
         layer.objects.forEach((obj) => {
           this.playerLocations.push([obj.x, obj.y]);
         });
-      } else if (layer.name === 'chest_locations') {
+      } else if (layer.name === 'coffee_locations') {
         layer.objects.forEach((obj) => {
-          if (this.chestLocations[obj.properties.spawner]) {
-            this.chestLocations[obj.properties.spawner].push([obj.x, obj.y]);
+          if (this.coffeeLocations[obj.properties.spawner]) {
+            this.coffeeLocations[obj.properties.spawner].push([obj.x, obj.y]);
           } else {
-            this.chestLocations[obj.properties.spawner] = [[obj.x, obj.y]];
+            this.coffeeLocations[obj.properties.spawner] = [[obj.x, obj.y]];
           }
           
         });
@@ -45,25 +45,25 @@ class GameManager {
       }
     });
     // console.log(this.playerLocations);
-    // console.log(this.chestLocations);
+    // console.log(this.coffeeLocations);
     // console.log(this.monsterLocations);
 
   }
 
   setupEventListener() {
-    this.scene.events.on('pickUpChest', (chestId, playerId) => {
+    this.scene.events.on('pickUpCoffee', (coffeeId, playerId) => {
       // update spawner
-      if (this.chests[chestId]) {
-        // short hand for setting bitcoin variable from chests[chestId].bitcoin this is probably a bad idea.. just trying to learn javascript and see if this works.
-        const { bitcoin } = this.chests[chestId];
+      if (this.coffees[coffeeId]) {
+        // short hand for setting bitcoin variable from coffees[coffeeId].bitcoin this is probably a bad idea.. just trying to learn javascript and see if this works.
+        const { bitcoin } = this.coffees[coffeeId];
 
         // updating player balance
         this.players[playerId].updateBitcoin(bitcoin);
         this.scene.events.emit('updateBalance', this.players[playerId].bitcoin);
 
-        // remove chest
-        this.spawners[this.chests[chestId].spawnerId].removeObject(chestId);
-        this.scene.events.emit('chestRemoved', chestId);
+        // remove coffee
+        this.spawners[this.coffees[coffeeId].spawnerId].removeObject(coffeeId);
+        this.scene.events.emit('coffeeRemoved', coffeeId);
       }
 
     });
@@ -121,14 +121,14 @@ class GameManager {
     let spawner;
 
 
-    Object.keys(this.chestLocations).forEach((key) => {
-      config.id = `chest-${key}`;
+    Object.keys(this.coffeeLocations).forEach((key) => {
+      config.id = `coffee-${key}`;
       config.spawnerType = SpawnerType.CHEST;
       spawner = new Spawner(
         config,
-        this.chestLocations[key],
-        this.addChest.bind(this),
-        this.deleteChest.bind(this)
+        this.coffeeLocations[key],
+        this.addCoffee.bind(this),
+        this.deleteCoffee.bind(this)
       );
       this.spawners[spawner.id] = spawner;
     });
@@ -154,12 +154,12 @@ class GameManager {
     this.players[player.id] = player;
     this.scene.events.emit('spawnPlayer', player);
   }
-  addChest(chestId, chest) {
-    this.chests[chestId] = chest;
-    this.scene.events.emit('chestSpawned', chest);
+  addCoffee(coffeeId, coffee) {
+    this.coffees[coffeeId] = coffee;
+    this.scene.events.emit('coffeeSpawned', coffee);
   }
-  deleteChest(chestId) {
-    delete this.chests[chestId];
+  deleteCoffee(coffeeId) {
+    delete this.coffees[coffeeId];
   }
   addMonster(monsterId, monster) {
     this.monsters[monsterId] = monster;

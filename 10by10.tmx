@@ -37,7 +37,7 @@
  <objectgroup id="4" name="objects" locked="1">
   <object id="1" gid="87" x="251.25" y="48.6" width="32" height="32">
    <properties>
-    <property name="Name" value="chest1"/>
+    <property name="Name" value="coffee1"/>
    </properties>
   </object>
   <object id="2" gid="86" x="43.7363" y="188.33" width="32" height="32"/>

@@ -23,18 +23,18 @@ class Spawner {
   }
   spawnObject() {
     if (this.objectType === SpawnerType.CHEST) {
-      this.spawnChest();
+      this.spawnCoffee();
 
     } else if (this.objectType === SpawnerType.MONSTER) {
       this.spawnMonster();
 
     }
   }
-  spawnChest() {
+  spawnCoffee() {
     const location = this.pickRandomLocation();
-    const chest = new ChestModel(location[0], location[1], randomNumber(1,21), this.id);
-    this.objectsCreated.push(chest);
-    this.addObject(chest.id, chest);
+    const coffee = new CoffeeModel(location[0], location[1], randomNumber(1,21), this.id);
+    this.objectsCreated.push(coffee);
+    this.addObject(coffee.id, coffee);
   }
   spawnMonster() {
     let monsterNum = randomNumber(0,20);

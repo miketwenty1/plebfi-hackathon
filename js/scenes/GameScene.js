@@ -57,33 +57,33 @@ class GameScene extends Phaser.Scene {
   }
   createGroups() {
 
-    this.chests = this.physics.add.group();
+    this.coffees = this.physics.add.group();
     this.monsters = this.physics.add.group();
     // this will auto run if this group has an update method
     this.monsters.runChildUpdate = true;
 
   }
-  spawnChest(chestObject) {
+  spawnCoffee(coffeeObject) {
 
     // console.log(location);
-    let chest = this.chests.getFirstDead();
-    if (!chest) {
-      // console.log('create new chest');
-      chest = new Chest (
+    let coffee = this.coffees.getFirstDead();
+    if (!coffee) {
+      // console.log('create new coffee');
+      coffee = new Coffee (
         this, 
-        chestObject.x * Scale.FACTOR, 
-        chestObject.y * Scale.FACTOR, 
+        coffeeObject.x * Scale.FACTOR, 
+        coffeeObject.y * Scale.FACTOR, 
         'items',
         0,
-        chestObject.bitcoin,
-        chestObject.id);
-      this.chests.add(chest);
+        coffeeObject.bitcoin,
+        coffeeObject.id);
+      this.coffees.add(coffee);
     } else {
-      // console.log('reposition dead chest');
-      chest.coin = chestObject.bitcoin;
-      chest.id = chestObject.id;
-      chest.setPosition(chestObject.x * Scale.FACTOR, chestObject.y * Scale.FACTOR);
-      chest.makeActive();
+      // console.log('reposition dead coffee');
+      coffee.coin = coffeeObject.bitcoin;
+      coffee.id = coffeeObject.id;
+      coffee.setPosition(coffeeObject.x * Scale.FACTOR, coffeeObject.y * Scale.FACTOR);
+      coffee.makeActive();
     }
 
   }
@@ -133,7 +133,7 @@ class GameScene extends Phaser.Scene {
   addCollisions() {
     // block the player and everything in the blocked layer
     this.physics.add.collider(this.player, this.map.blockedLayer);
-    this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
+    this.physics.add.overlap(this.player, this.coffees, this.collectCoffee, null, this);
     this.physics.add.collider(this.monsters, this.map.blockedLayer);
     this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this);
   }
@@ -147,15 +147,15 @@ class GameScene extends Phaser.Scene {
 
   }
 
-  collectChest(player,chest) {
-    // console.log('collected chest');
-    // chest.makeInactive();  this now done by chest event listener on chestRemoved
-    // this.score += chest.coins commenting this out because now it exist in the player model 
+  collectCoffee(player,coffee) {
+    // console.log('collected coffee');
+    // coffee.makeInactive();  this now done by coffee event listener on coffeeRemoved
+    // this.score += coffee.coins commenting this out because now it exist in the player model 
     // this.events.emit('updateBalance', this.score);  this also taken out and put game manager
     if (this.goldAudio.isPlaying == false) {
       this.goldAudio.play();
     }
-    this.events.emit('pickUpChest', chest.id, this.player.id);
+    this.events.emit('pickUpCoffee', coffee.id, this.player.id);
   }
   createMap() {
     // create map
@@ -167,8 +167,8 @@ class GameScene extends Phaser.Scene {
       this.createPlayer(playerObject);
       this.addCollisions();
     });
-    this.events.on('chestSpawned', (chest) => {
-      this.spawnChest(chest);
+    this.events.on('coffeeSpawned', (coffee) => {
+      this.spawnCoffee(coffee);
     });
     this.events.on('monsterSpawned', (monster) => {
       // console.log('spawned:'+monster);
@@ -182,10 +182,10 @@ class GameScene extends Phaser.Scene {
         }
       });
     });
-    this.events.on('chestRemoved', (chestId) => {
-      this.chests.getChildren().forEach((chest) => {
-        if (chest.id == chestId) {
-          chest.makeInactive();
+    this.events.on('coffeeRemoved', (coffeeId) => {
+      this.coffees.getChildren().forEach((coffee) => {
+        if (coffee.id == coffeeId) {
+          coffee.makeInactive();
         }
       });
     });

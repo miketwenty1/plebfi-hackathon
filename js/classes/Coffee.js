@@ -1,4 +1,4 @@
-class Chest extends Phaser.Physics.Arcade.Image {
+class Coffee extends Phaser.Physics.Arcade.Image {
   constructor (scene, x, y, key, frame, coins, id) {
     super(scene, x, y, key, frame);
     this.scene = scene;
