@@ -26,10 +26,13 @@ class Map {
     this.blockedLayer.setCollisionByExclusion([-1]);
 
     // update the world bounds
-    this.scene.physics.world.bounds.width = this.map.widthInPixels * Scale.FACTOR;
-    this.scene.physics.world.bounds.height = this.map.heightInPixels * Scale.FACTOR;
+    // this.scene.physics.world.bounds.width = this.map.widthInPixels * Scale.FACTOR;
+    // this.scene.physics.world.bounds.height = this.map.heightInPixels * Scale.FACTOR;
+    this.scene.physics.world.bounds.width = this.tileMap.widthInPixels * Scale.FACTOR;
+    this.scene.physics.world.bounds.height = this.tileMap.heightInPixels * Scale.FACTOR;
     // limit camera
     this.scene.cameras.main.setBounds(0,0,this.map.widthInPixels * Scale.FACTOR, this.map.heightInPixels * Scale.FACTOR)
+    
   }
 
 
