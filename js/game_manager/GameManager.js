@@ -113,8 +113,8 @@ class GameManager {
   }
   setupSpawners() {
     const config = {
-      spawnInterval: 3000,
-      limit: 40,
+      spawnInterval: 1000,
+      limit: 25,
       spawnerType: '',
       id: ''
     };
