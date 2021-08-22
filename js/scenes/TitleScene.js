@@ -26,9 +26,10 @@ class TitleScene extends Phaser.Scene {
       this.scale.height * 0.65,
       'button1',
       'button2',
-      'Pleb or Die',
+      `Pay 500 sats\nthen click`,
       this.startScene.bind(this, 'Game')
     );
+    this.btcIcon = this.add.image(200,200,'qrcode').setScale(1);
   }
   startScene(targetScene) {
     this.scene.start(targetScene);
